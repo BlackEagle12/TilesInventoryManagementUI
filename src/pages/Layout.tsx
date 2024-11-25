@@ -10,20 +10,7 @@ import { toast, useToast } from "../hooks/use-toast";
 
 const Layout: FC = () => {
 
-  const notification= useSelector(state=>state.notification);
 
-  const {toast} = useToast();
-
-  console.log('notification',notification);
-  
-  useEffect(()=>{
-    if(notification.message){
-      toast({
-        title:notification.message,
-        variant:notification.type=="error" ? 'destructive' :notification.type=='success' ? "success" : ""
-      })
-    }
-  },[notification])
 
   return (
     <SidebarProvider>

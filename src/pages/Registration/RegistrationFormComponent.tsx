@@ -41,6 +41,7 @@ import {
 } from "../../redux/reducer/api/commonApi";
 import { useSignUpMutation } from "../../redux/reducer/api/authApi";
 import Loader from "../../components/myComponents/Loader";
+import { useDispatch } from "react-redux";
 
 // Validation Schemas
 const loginSchema = z
@@ -108,9 +109,9 @@ export function RegistrationFormComponent() {
     { data: isUserNameExit, isLoading: checkingUserName },
   ] = useIsUserNameExitMutation();
 
-  const [registerUser,{isLoading:isSubmitting}]=useSignUpMutation();
+  const [registerUser,{isLoading:isSubmitting,isSuccess}]=useSignUpMutation();
 
-
+  
   const navigate = useNavigate();
 
   console.log("categoryList", stateList);
@@ -120,6 +121,12 @@ export function RegistrationFormComponent() {
     getCountry();
     getRole();
   }, []);
+
+  useEffect(()=>{
+    if(isSuccess){
+      navigate("/login");
+    }
+  },[isSuccess]);
 
   const form = useForm<z.infer<typeof loginSchema & typeof userDetailsSchema & typeof addressDetailSchema>>({
     resolver: zodResolver(
