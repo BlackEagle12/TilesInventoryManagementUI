@@ -14,13 +14,15 @@ interface Action {
 export const showNotificationMiddleware: Middleware = (storeAPI) => (next) => 
   (action: Action) => {
     if (action.type.endsWith("/rejected")) {
-      const errorMessage = action.payload?.data?.errorMessage;
+      const errorMessage = action.payload?.errorMessage;
       console.log({errorMessage});
       if (typeof errorMessage === "string") {
         storeAPI.dispatch(errorNotification(errorMessage));
     }
   } else if (action.type.endsWith("/fulfilled")) {
-    const successMessage = action.payload?.data?.message || action.payload?.data;
+    const successMessage = action.payload?.message || action.payload?.data;
+    console.log({successMessage});
+
     if (typeof successMessage === "string") {
       storeAPI.dispatch(successNotification(successMessage));
     }

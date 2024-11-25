@@ -60,7 +60,7 @@ export function Login() {
                   <FormItem>
                     <FormLabel>User Name</FormLabel>
                     <FormControl>
-                      <Input type="username" placeholder="johndoe@example.com" {...field} />
+                      <Input type="text" placeholder="johndoe@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -53,8 +53,6 @@ export function Account() {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 2000))
         setIsSubmitting(false)
-        console.log(values)
-       
     }
 
   return (

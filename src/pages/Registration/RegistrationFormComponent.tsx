@@ -114,7 +114,6 @@ export function RegistrationFormComponent() {
   
   const navigate = useNavigate();
 
-  console.log("categoryList", stateList);
 
   useEffect(() => {
     getCategory();
@@ -211,7 +210,6 @@ export function RegistrationFormComponent() {
     }
 
   }
-  console.log(form.getValues());
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-modern from-amber-100 to-amber-200 p-4">
@@ -371,8 +369,6 @@ export function RegistrationFormComponent() {
                   control={form.control}
                   name="categoryId"
                   render={({ field }) => {
-                    
-                    console.log('field',field);
                     
                     return (
                     <FormItem>
