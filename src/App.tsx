@@ -12,6 +12,9 @@ function App() {
 
   const {toast} = useToast();
   
+  console.log({notification});
+  
+
   useEffect(()=>{
     if(notification && notification.message){
       toast({
