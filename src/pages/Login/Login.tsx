@@ -1,50 +1,44 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { toast } from '../../hooks/use-toast';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../components/ui/form';
 import { Input } from '../../components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../../components/myComponents/Loader';
+import { useLoginMutation } from '../../redux/reducer/api/authApi';
 
 const loginSchema = z.object({
-    email: z.string().email({ message: 'Invalid email address.' }),
+  username: z.string(),
     password: z.string().min(8, { message: 'Password must be at least 8 characters.' }),
   });
 
 export function Login() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
+
+  const [login,{isLoading:isSubmitting,isSuccess}]=useLoginMutation();
+
+  useEffect(()=>{
+    isSuccess && navigate('/stock');
+  },[isSuccess])
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   });
 
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    setIsSubmitting(true);
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
-
-    toast({
-      title: 'Registration Successful',
-      description: 'Your account has been created.',
-    });
-
-    navigate('/');
+    login(values);
   }
 
   const onError=(e: any)=>{
       console.log('hello ',e);
-      
   }
 
   return (
@@ -61,12 +55,12 @@ export function Login() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="email"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>User Name</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="johndoe@example.com" {...field} />
+                      <Input type="username" placeholder="johndoe@example.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

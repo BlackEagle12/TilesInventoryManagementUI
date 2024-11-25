@@ -6,8 +6,8 @@ export const authApi = createApi({
   baseQuery: customBaseQuery(),
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (credentials: string) => ({
-        url: "/Auth/authenticate", // The API endpoint path for login
+      query: (credentials) => ({
+        url: "/Auth/login", // The API endpoint path for login
         method: "POST",
         body: JSON.stringify(credentials), // The data you want to send in the request body (e.g., { username, password })
       }),
