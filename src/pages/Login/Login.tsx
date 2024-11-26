@@ -19,10 +19,20 @@ export function Login() {
 
   const navigate = useNavigate();
 
-  const [login,{isLoading:isSubmitting,isSuccess}]=useLoginMutation();
+  const [login,{isLoading:isSubmitting,isSuccess:isSubmitted}]=useLoginMutation();
+  const [getPermission,{isLoading:gettingPermission,isSuccess}]=useLoginMutation();
+
 
   useEffect(()=>{
-    isSuccess && navigate('/stock');
+
+    if(isSubmitted){
+      getPermission({})
+    }
+
+  },[isSubmitted]);
+
+  useEffect(()=>{
+    isSuccess && navigate('/authorize');
   },[isSuccess])
 
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -45,7 +55,7 @@ export function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-modern from-amber-100 to-amber-200 p-4">
       <Card className="w-full max-w-md">
         {
-          isSubmitting && <Loader />
+          isSubmitting || gettingPermission && <Loader />
         }
         <CardHeader className="text-xl text-center divide-y">
           <CardTitle>Login</CardTitle>

@@ -32,9 +32,13 @@ import { useNavigate } from "react-router-dom";
 import DatePickerFormField from "./Component/DatePickerFormField";
 import {
   useGetCategoryMutation,
+  useGetCategoryQuery,
   useGetCountryMutation,
+  useGetCountryQuery,
   useGetRoleMutation,
+  useGetRoleQuery,
   useGetStateMutation,
+  useGetStateQuery,
   useIsEmailExitMutation,
   useIsPhoneNoExitMutation,
   useIsUserNameExitMutation,
@@ -91,14 +95,15 @@ const addressDetailSchema = z.object({
 export function RegistrationFormComponent() {
   const [step, setStep] = useState(1);
 
-  const [getCategory, { data: categoryList, isLoading: isCategoryLoaing }] =
-    useGetCategoryMutation();
-  const [getCountry, { data: countryList, isLoading: isCountryLoaing }] =
-    useGetCountryMutation();
-  const [getState, { data: stateList, isLoading: isStateLoaing }] =
-    useGetStateMutation();
-  const [getRole, { data: roleList, isLoading: isRolesLoaing }] =
-    useGetRoleMutation();
+
+  const { data: categoryList, isLoading: isCategoryLoaing } =
+  useGetCategoryQuery({});
+  const { data: countryList, isLoading: isCountryLoaing } =
+  useGetCountryQuery({});
+  const [getState,{ data: stateList, isLoading: isStateLoaing }]=
+  useGetStateMutation({});
+  const { data: roleList, isLoading: isRolesLoaing } =
+    useGetRoleQuery({});
 
   const [checkIsEmailExits, { data: isEmailExit, isLoading: checkingEmail }] =
     useIsEmailExitMutation();
@@ -113,13 +118,6 @@ export function RegistrationFormComponent() {
 
   
   const navigate = useNavigate();
-
-
-  useEffect(() => {
-    getCategory();
-    getCountry();
-    getRole();
-  }, []);
 
   useEffect(()=>{
     if(isSuccess){

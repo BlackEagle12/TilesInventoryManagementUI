@@ -33,7 +33,7 @@ export const authApi = createApi({
         body: credentials, // The data you want to send in the request body (e.g., { username, password })
       }),
     }),
-    
+   
   }),
 }); // example of api calling
 

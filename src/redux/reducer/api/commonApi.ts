@@ -6,7 +6,7 @@ export const commonApi = createApi({
   baseQuery: customBaseQuery(),
   
   endpoints: (builder) => ({
-    getCountry: builder.mutation({
+    getCountry: builder.query({
       query: () => ({
         url: "/Countries", 
         method: "GET",
@@ -24,7 +24,7 @@ export const commonApi = createApi({
           return response.data
         }
     }),
-    getCategory: builder.mutation({
+    getCategory: builder.query({
         query: () => ({
           url: "/Categories", 
           method: "GET",
@@ -33,7 +33,7 @@ export const commonApi = createApi({
           return response.data
         }
     }),
-    getRole: builder.mutation({
+    getRole: builder.query({
       query: () => ({
         url: "/Roles/GetDefault", 
         method: "GET",
@@ -77,4 +77,4 @@ isUserNameExit: builder.mutation({
   }),
 }); 
 
-export const { useGetCategoryMutation, useGetCountryMutation, useGetStateMutation, useGetRoleMutation, useIsEmailExitMutation,useIsPhoneNoExitMutation,useIsUserNameExitMutation } = commonApi;
+export const { useGetRoleQuery,useGetCategoryQuery,useGetCountryQuery,useGetStateMutation, useIsEmailExitMutation,useIsPhoneNoExitMutation,useIsUserNameExitMutation } = commonApi;

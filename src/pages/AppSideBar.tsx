@@ -1,4 +1,4 @@
-import { Package, PackageOpen } from "lucide-react"
+import { Package, PackageOpen, User } from "lucide-react"
 
 import {
   Sidebar,
@@ -13,6 +13,9 @@ import {
 } from "../components/ui/sidebar"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../components/ui/button";
+import { useGetPermissionsMutation } from "../redux/reducer/api/userApi";
+import Loader from "../components/myComponents/Loader";
+import { useEffect } from "react";
 
 // Menu items.
 const items = [
@@ -26,19 +29,25 @@ const items = [
     url: "/stock-items",
     icon: PackageOpen,
   },
+  {
+    title: "Users",
+    url: "/users",
+    icon: User,
+  },
 ]
 
 export function AppSidebar() {
 
-  
   const navigate=useNavigate();
 
+ 
   const handleLogout=()=>{
     navigate('login')  
   }
 
   return (
     <Sidebar>
+     
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Company Name</SidebarGroupLabel>

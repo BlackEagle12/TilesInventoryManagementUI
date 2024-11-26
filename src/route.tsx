@@ -6,6 +6,8 @@ import StockItems from "./pages/StockItems/StockItems";
 import Login from "./pages/Login/Login";
 import ErrorPage from "./pages/Error-Page/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import Users from "./pages/Users/Users";
+import Authorized from "./pages/Authorized/Authorized";
 
 export const routerObjects: RouteObject[] = [
   {
@@ -19,6 +21,10 @@ export const routerObjects: RouteObject[] = [
       {
         path:"/stock-items",
         element:<StockItems />
+      },
+      {
+        path:"/users",
+        element:<Users />
       }
     ]
   },
@@ -33,6 +39,10 @@ export const routerObjects: RouteObject[] = [
   {
     path:'/forgot-password',
     element:<ForgotPassword />
+  },
+  {
+    path:'/authorize',
+    element:<Authorized />
   }
 ];
 

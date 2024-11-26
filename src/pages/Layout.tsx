@@ -5,12 +5,8 @@ import {
 } from "../components/ui/sidebar";
 import { AppSidebar } from "./AppSideBar";
 import { Outlet } from "react-router-dom";
-import { useSelector, useStore } from "react-redux";
-import { toast, useToast } from "../hooks/use-toast";
 
 const Layout: FC = () => {
-
-
 
   return (
     <SidebarProvider>
