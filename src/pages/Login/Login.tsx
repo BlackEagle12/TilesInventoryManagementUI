@@ -9,6 +9,7 @@ import { Input } from '../../components/ui/input';
 import { Link, useNavigate } from 'react-router-dom';
 import Loader from '../../components/myComponents/Loader';
 import { useLoginMutation } from '../../redux/reducer/api/authApi';
+import OverlayLoader from '../../components/myComponents/OverlayLoader';
 
 const loginSchema = z.object({
   username: z.string(),
@@ -20,20 +21,14 @@ export function Login() {
   const navigate = useNavigate();
 
   const [login,{isLoading:isSubmitting,isSuccess:isSubmitted}]=useLoginMutation();
-  const [getPermission,{isLoading:gettingPermission,isSuccess}]=useLoginMutation();
-
 
   useEffect(()=>{
 
     if(isSubmitted){
-      getPermission({})
+      navigate('/authorize')
     }
 
   },[isSubmitted]);
-
-  useEffect(()=>{
-    isSuccess && navigate('/authorize');
-  },[isSuccess])
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -51,12 +46,14 @@ export function Login() {
       console.log('hello ',e);
   }
 
+  console.log('isSubmitting',isSubmitting);
+  
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-modern from-amber-100 to-amber-200 p-4">
+    <div className="min-h-screen flex items-center justify-center relative bg-gradient-modern from-amber-100 to-amber-200 p-4">
+      {
+        (isSubmitting) && <OverlayLoader />
+      }
       <Card className="w-full max-w-md">
-        {
-          isSubmitting || gettingPermission && <Loader />
-        }
         <CardHeader className="text-xl text-center divide-y">
           <CardTitle>Login</CardTitle>
         </CardHeader>

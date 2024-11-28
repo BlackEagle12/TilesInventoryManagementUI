@@ -8,7 +8,7 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     getUserById: builder.mutation({
       query: (id: number) => ({
-        url: `/user/${id}`, // The API endpoint path for login
+        url: `/users/${id}`, // The API endpoint path for login
         method: "GET"
       }),
       transformResponse(response){
@@ -17,7 +17,7 @@ export const userApi = createApi({
     }),
     getAllUser: builder.query({
       query: ({pageNo,pageSize}) => ({
-        url: `/users/${pageNo}/${pageSize}`, // The API endpoint path for login
+        url: `/users/pageNo=${pageNo}&pageSize=${pageSize}/`, // The API endpoint path for login
         method: "GET"
       }),
       providesTags: ['Users'], 
@@ -27,7 +27,7 @@ export const userApi = createApi({
     }),
     updateUser: builder.mutation({
       query: (payload) => ({
-        url: `/user/${payload.id}`, // The API endpoint path for login
+        url: `/users/${payload.id}`, // The API endpoint path for login
         method: "PUT",
         body:JSON.stringify(payload)
       }),
@@ -48,7 +48,7 @@ export const userApi = createApi({
     }),
     getPermissions:builder.mutation({
       query: () => ({
-        url: `/user/permissions`, // The API endpoint path for login
+        url: `/users/permissions`, // The API endpoint path for login
         method: "GET",
       }),
       transformResponse(response){

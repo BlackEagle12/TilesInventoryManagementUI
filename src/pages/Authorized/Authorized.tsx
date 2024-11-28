@@ -14,7 +14,7 @@ const Authorized = () => {
   },[]);
   
   useEffect(()=>{
-    isSuccess && navigate('/stock');
+    isSuccess && navigate('/stocks');
   },[isSuccess]);
 
   return (

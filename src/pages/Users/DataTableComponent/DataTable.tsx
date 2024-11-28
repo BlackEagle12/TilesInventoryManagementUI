@@ -15,16 +15,19 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Loader from "../../../components/myComponents/Loader"
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue,Boolean> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  isLoading:Boolean
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TData, TValue,Boolean>({
   columns,
   data,
-}: DataTableProps<TData, TValue>) {
+  isLoading
+}: DataTableProps<TData, TValue,Boolean>) {
 
   const table = useReactTable({
     data,
@@ -69,9 +72,12 @@ export function DataTable<TData, TValue>({
             ))
           ) : (
             <TableRow>
+              {
+                isLoading ? <Loader /> :
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
               </TableCell>
+              }
             </TableRow>
           )}
         </TableBody>

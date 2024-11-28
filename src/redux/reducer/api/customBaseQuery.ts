@@ -1,18 +1,25 @@
 import { BaseQueryFn, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import Cookies from 'universal-cookie';
 
+const cookies = new Cookies();
 export const customBaseQuery = (): BaseQueryFn => {
+
+
 
   console.log(import.meta.env.VITE_API_URL,"import.meta.env.API_URL");
   
   return fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL,
     prepareHeaders: (headers: Headers) => {
-      const token = "asaasasa";
+      const token = cookies.get("auth-session");
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
       
-      headers.set("Content-Type","application/json")
+      headers.set("Content-Type","application/json");
+
+      headers.set("ngrok-skip-browser-warning","saaasa");
+     
       return headers;
     }
   });

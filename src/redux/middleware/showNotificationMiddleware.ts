@@ -14,7 +14,8 @@ interface Action {
 export const showNotificationMiddleware: Middleware = (storeAPI) => (next) => 
   (action: Action) => {
     if (action.type.endsWith("/rejected")) {
-      const errorMessage = action.payload?.errorMessage;
+      console.log('message', action.payload);
+      const errorMessage = action.payload?.data?.ErrorMessage;
       console.log({errorMessage});
       if (typeof errorMessage === "string") {
         storeAPI.dispatch(errorNotification(errorMessage));

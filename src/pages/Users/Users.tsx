@@ -12,7 +12,7 @@ import { useState } from "react"
     const [pageNo, setPageNo] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
-    const {data,isLoading} = useGetAllUserQuery({pageNo,pageSize});
+    const {data,isLoading,isFetching} = useGetAllUserQuery({pageNo,pageSize});
 
     const totalPages = 20; // Example total pages
     
@@ -28,21 +28,22 @@ import { useState } from "react"
 
     
   return (
-    <div className="container mx-auto p-3 relative">
+    <div className="container mx-auto p-3 h-fit relative">
         {
-            isLoading && <Loader />
+            <>
+              <DataTable columns={columns} data={data || []} isLoading={(isLoading || isFetching)} />
+              <div className="flex items-center justify-end space-x-2 py-4">
+                <PaginationDropdown
+                    totalPages={totalPages}
+                    options={[5, 10, 20, 50]}
+                    defaultPageSize={10}
+                    defaultPageNumber={1}
+                    onPageSizeChange={handlePageSizeChange}
+                    onPageNumberChange={handlePageNumberChange}
+                />
+              </div>
+            </>
         }
-      <DataTable columns={columns} data={data || []} />
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <PaginationDropdown
-            totalPages={totalPages}
-            options={[5, 10, 20, 50]}
-            defaultPageSize={10}
-            defaultPageNumber={1}
-            onPageSizeChange={handlePageSizeChange}
-            onPageNumberChange={handlePageNumberChange}
-        />
-      </div>
     </div>
   )
 }
