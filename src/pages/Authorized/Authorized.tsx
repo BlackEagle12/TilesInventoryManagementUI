@@ -12,10 +12,7 @@ const Authorized = () => {
   useEffect(()=>{
     getPermissions({});
   },[]);
-  
-  useEffect(()=>{
-    isSuccess && navigate('/stocks');
-  },[isSuccess]);
+
 
   return (
     <div className='w-100 h-100'>

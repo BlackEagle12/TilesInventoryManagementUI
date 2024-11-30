@@ -25,7 +25,7 @@ export function Login() {
   useEffect(()=>{
 
     if(isSubmitted){
-      navigate('/authorize')
+      navigate('/')
     }
 
   },[isSubmitted]);

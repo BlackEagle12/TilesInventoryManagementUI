@@ -7,27 +7,28 @@ export const userApi = createApi({
   tagTypes: ['Users'], // Define the tag types
   endpoints: (builder) => ({
     getUserById: builder.mutation({
-      query: (id: number) => ({
-        url: `/users/${id}`, // The API endpoint path for login
+      query: (id?: number) => ({
+        url: `/users${id ? "/"+id : ""}` , // The API endpoint path for login
         method: "GET"
       }),
       transformResponse(response){
         return response.data;
       }
     }),
-    getAllUser: builder.query({
-      query: ({pageNo,pageSize}) => ({
-        url: `/users/pageNo=${pageNo}&pageSize=${pageSize}/`, // The API endpoint path for login
-        method: "GET"
+    getAllUser: builder.mutation({
+      query: (payload) => ({
+        url: `/users/GetAll`, // The API endpoint path for login
+        method: "POST",
+        body:JSON.stringify(payload)
       }),
-      providesTags: ['Users'], 
+      providesTags: (result) => [{ type: 'User', id: result?.id || 'USER' }], 
       transformResponse(response){
         return response.data;
       }
     }),
     updateUser: builder.mutation({
       query: (payload) => ({
-        url: `/users/${payload.id}`, // The API endpoint path for login
+        url: `/users`, // The API endpoint path for login
         method: "PUT",
         body:JSON.stringify(payload)
       }),
@@ -55,7 +56,14 @@ export const userApi = createApi({
         return response.data;
       }
     }),
+    updateUserRole: builder.mutation({
+      query: (payload) => ({
+        url: `/users/updateRole/${payload.id}/${payload.roleId}`, // The API endpoint path for login
+        method: "GET"
+      }),
+      invalidatesTags: (result) => [{ type: 'User', id: result?.id || 'USER' }], 
+    }),
   }),
 }); // example of api calling
 
-export const { useGetAllUserQuery, useGetUserByIdMutation, useUpdateUserMutation,useDeleteUserMutation,useGetPermissionsMutation } = userApi;
+export const { useUpdateUserRoleMutation,useGetAllUserMutation, useGetUserByIdMutation, useUpdateUserMutation,useDeleteUserMutation,useGetPermissionsMutation } = userApi;

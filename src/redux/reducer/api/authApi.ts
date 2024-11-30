@@ -16,6 +16,7 @@ export const authApi = createApi({
       }),
       transformResponse(response){
         cookies.set('auth-session',response.data.token);
+        localStorage.setItem("user",JSON.stringify(response.data));
         return response;
       }
     }),

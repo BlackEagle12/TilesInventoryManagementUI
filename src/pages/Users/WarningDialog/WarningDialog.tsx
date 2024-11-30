@@ -2,6 +2,7 @@
 
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { DialogClose } from "../../../components/ui/dialog";
 
 type WarningDialogProps = {
   title: string;
@@ -24,7 +25,7 @@ export const WarningDialog = ({
 }: WarningDialogProps) => {
 
   const handleClose = () => {
-    onCancel?.();
+    onCancel && onCancel();
   };
 
   const handleConfirm = () => {
@@ -37,6 +38,7 @@ export const WarningDialog = ({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{title}</DialogTitle>
+            <DialogClose />
           </DialogHeader>
           <p className="text-sm text-muted-foreground">{description}</p>
           <DialogFooter>

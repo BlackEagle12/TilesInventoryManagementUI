@@ -21,8 +21,11 @@ export const columns: ColumnDef<User>[] = [
       accessorKey: "name",
       header: "Name",
       cell: ({ row }) => {
+
+        const {original}=row;
+        
         return (
-            <span>{row.firstName+" "+row.lastName}</span>
+            <span>{original.firstName+" "+original.lastName}</span>
         )
       },
     },
@@ -47,8 +50,10 @@ export const columns: ColumnDef<User>[] = [
       header: "Role",
       cell: ({ row }) => {
 
+        const {original}=row;
+
         return (
-            <RoleCell row={row} key={row.id} />
+            <RoleCell row={original} key={row.id} />
         )
       },
     },

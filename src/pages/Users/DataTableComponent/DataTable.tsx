@@ -36,7 +36,7 @@ export function DataTable<TData, TValue,Boolean>({
   })
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border h-100">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -57,6 +57,9 @@ export function DataTable<TData, TValue,Boolean>({
           ))}
         </TableHeader>
         <TableBody>
+          {
+             isLoading && <Loader /> 
+          }
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
@@ -73,7 +76,7 @@ export function DataTable<TData, TValue,Boolean>({
           ) : (
             <TableRow>
               {
-                isLoading ? <Loader /> :
+               
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
               </TableCell>

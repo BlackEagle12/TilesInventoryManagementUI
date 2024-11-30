@@ -13,30 +13,34 @@ import {
 } from "../components/ui/sidebar"
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from "../components/ui/button";
-import { useGetPermissionsMutation } from "../redux/reducer/api/userApi";
-import Loader from "../components/myComponents/Loader";
-import { useEffect } from "react";
 
 // Menu items.
 const items = [
   {
     title: "Stocks",
     url: "/stocks",
-    icon: Package,
+    icon: PackageOpen,
+    permissionName:"VIEW_INVENTORY_STOCK"
   },
   {
-    title: "Stocks Items",
+    title: "Inventory Items",
     url: "/stock-items",
-    icon: PackageOpen,
+    icon: Package,
+    permissionName:"VIEW_INVENTORY_LIST"
   },
   {
     title: "Users",
     url: "/users",
     icon: User,
+    permissionName:"VIEW_USER_LIST"
   },
 ]
 
-export function AppSidebar() {
+interface props{
+  permissionList:string[]
+}
+
+export function AppSidebar({permissionList=[]}:props) {
 
   const navigate=useNavigate();
 
@@ -54,6 +58,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
+                permissionList.includes(item.permissionName) && 
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild >
                     <Link to={item.url}>

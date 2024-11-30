@@ -8,6 +8,7 @@ import ErrorPage from "./pages/Error-Page/ErrorPage";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Users from "./pages/Users/Users";
 import Authorized from "./pages/Authorized/Authorized";
+import EditAccount from "./pages/Account/EditAccount";
 
 export const routerObjects: RouteObject[] = [
   {
@@ -25,6 +26,10 @@ export const routerObjects: RouteObject[] = [
       {
         path:"/users",
         element:<Users />
+      },
+      {
+        path:"/account",
+        element:<EditAccount />
       }
     ]
   },

@@ -42,6 +42,15 @@ export const commonApi = createApi({
         return response.data
       }
   }),
+  getAllRole: builder.query({
+    query: () => ({
+      url: "/Roles", 
+      method: "GET",
+    }),
+    transformResponse(response){
+      return response.data
+    }
+}),
   isEmailExit: builder.mutation({
     query: (payload) => ({
       url: "/Users/isEmailExist", 
@@ -77,4 +86,4 @@ isUserNameExit: builder.mutation({
   }),
 }); 
 
-export const { useGetRoleQuery,useGetCategoryQuery,useGetCountryQuery,useGetStateMutation, useIsEmailExitMutation,useIsPhoneNoExitMutation,useIsUserNameExitMutation } = commonApi;
+export const { useGetAllRoleQuery,useGetRoleQuery,useGetCategoryQuery,useGetCountryQuery,useGetStateMutation, useIsEmailExitMutation,useIsPhoneNoExitMutation,useIsUserNameExitMutation } = commonApi;
