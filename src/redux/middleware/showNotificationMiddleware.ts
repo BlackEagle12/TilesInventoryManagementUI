@@ -13,16 +13,17 @@ interface Action {
 
 export const showNotificationMiddleware: Middleware = (storeAPI) => (next) => 
   (action: Action) => {
-  console.log('Action:', action);
-
-  if (action.type.endsWith("/rejected")) {
-    const errorMessage = action.payload?.data?.message;
-    if (typeof errorMessage === "string" && errorMessage.length > 0) {
-      storeAPI.dispatch(errorNotification(errorMessage));
+    if (action.type.endsWith("/rejected")) {
+      const errorMessage = action.payload?.data?.ErrorMessage;
+      console.log({errorMessage});
+      if (typeof errorMessage === "string") {
+        storeAPI.dispatch(errorNotification(errorMessage));
     }
   } else if (action.type.endsWith("/fulfilled")) {
-    const successMessage = action.payload?.data?.message || action.payload?.data;
-    if (typeof successMessage === "string" && successMessage.length > 0) {
+    const successMessage = action.payload?.message || action.payload?.data;
+    console.log({successMessage});
+
+    if (typeof successMessage === "string") {
       storeAPI.dispatch(successNotification(successMessage));
     }
   }

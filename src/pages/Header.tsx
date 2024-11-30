@@ -7,6 +7,7 @@ import { ChevronUp, User2 } from 'lucide-react';
 
 
 import { useTheme } from 'next-themes'
+import EditAccount from './Account/EditAccount';
 
 // const ThemeChanger = () => {
 //   const { theme, setTheme } = useTheme()
@@ -23,10 +24,12 @@ import { useTheme } from 'next-themes'
 const Header = () => {
 
 
+  const navigate=useNavigate();
+
   return (
     <div className='flex justify-end m-2'>
       <div className='flex gap-2'>
-        <Account></Account>
+        <EditAccount ></EditAccount>
         {/* <ThemeChanger></ThemeChanger> */}
       </div>
     </div>

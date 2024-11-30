@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { FormDescription } from "../../../components/ui/form"
+import { FormMessage } from "../../../components/ui/form"
 
 
  function DatePickerFormField({formControl,name,label,description=""}) {
@@ -26,32 +26,31 @@ import { FormDescription } from "../../../components/ui/form"
           name={name}
           className="w-100"
           render={({ field }) => {
-            
-            
             return (
             <FormItem>
-              <FormLabel className="flex gap-2">{label} 
-                <span className="text-muted-foreground">
+              <FormLabel>{label} 
+                <span className="ms-2 text-muted-foreground">
                 {"("+description+")"}
               </span></FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-full pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
+                    <FormControl>
+                      <Button
+                        type="button"
+                        variant={"outline"}
+                        className={cn(
+                          "w-full pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
                   <Calendar
@@ -66,6 +65,8 @@ import { FormDescription } from "../../../components/ui/form"
                   />
                 </PopoverContent>
               </Popover>
+              <FormMessage />
+
             </FormItem>
           )}}
         />

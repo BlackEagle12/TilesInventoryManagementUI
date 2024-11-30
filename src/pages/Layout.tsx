@@ -4,30 +4,36 @@ import {
   SidebarProvider,
 } from "../components/ui/sidebar";
 import { AppSidebar } from "./AppSideBar";
-import { Outlet } from "react-router-dom";
-import { useSelector, useStore } from "react-redux";
-import { toast, useToast } from "../hooks/use-toast";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useGetPermissionsMutation } from "../redux/reducer/api/userApi";
+import Loader from "../components/myComponents/Loader";
 
 const Layout: FC = () => {
 
-  const notification= useSelector(state=>state.notification);
+  const navigate = useNavigate();
 
-  const {toast} = useToast();
+  const [getPermissions,{data:permissionList,isLoading,isSuccess}]=useGetPermissionsMutation();
 
-  console.log('notification',notification);
-  
   useEffect(()=>{
-    if(notification.message){
-      toast({
-        title:notification.message,
-        variant:notification.type=="error" ? 'destructive' :notification.type=='success' ? "success" : ""
-      })
-    }
-  },[notification])
+    getPermissions({});
+  },[]);
+
+    
+  useEffect(()=>{
+    isSuccess && navigate('/stocks');
+  },[isSuccess]);
+
+  if(isLoading){
+    return (<div className='w-100 h-100'>
+    {
+     isLoading && <Loader />
+   }
+ </div>);
+  }
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar permissionList={permissionList} />
       <main className="w-full">
         <Header />
         <div className=" h-[calc(100vh-36px)] pb-9 overflow-auto">

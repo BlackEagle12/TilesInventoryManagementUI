@@ -73,8 +73,6 @@ export default function RegistrationForm() {
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000))
       setIsSubmitting(false)
-      console.log(values)
-     
     }
   }
 

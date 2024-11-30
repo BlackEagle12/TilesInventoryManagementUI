@@ -1,4 +1,4 @@
-import { Package, PackageOpen } from "lucide-react"
+import { Package, PackageOpen, User } from "lucide-react"
 
 import {
   Sidebar,
@@ -19,32 +19,46 @@ const items = [
   {
     title: "Stocks",
     url: "/stocks",
-    icon: Package,
+    icon: PackageOpen,
+    permissionName:"VIEW_INVENTORY_STOCK"
   },
   {
-    title: "Stocks Items",
+    title: "Inventory Items",
     url: "/stock-items",
-    icon: PackageOpen,
+    icon: Package,
+    permissionName:"VIEW_INVENTORY_LIST"
+  },
+  {
+    title: "Users",
+    url: "/users",
+    icon: User,
+    permissionName:"VIEW_USER_LIST"
   },
 ]
 
-export function AppSidebar() {
+interface props{
+  permissionList:string[]
+}
 
-  
+export function AppSidebar({permissionList=[]}:props) {
+
   const navigate=useNavigate();
 
+ 
   const handleLogout=()=>{
     navigate('login')  
   }
 
   return (
     <Sidebar>
+     
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Company Name</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
+                permissionList.includes(item.permissionName) && 
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild >
                     <Link to={item.url}>

@@ -32,15 +32,20 @@ import { useNavigate } from "react-router-dom";
 import DatePickerFormField from "./Component/DatePickerFormField";
 import {
   useGetCategoryMutation,
+  useGetCategoryQuery,
   useGetCountryMutation,
+  useGetCountryQuery,
   useGetRoleMutation,
+  useGetRoleQuery,
   useGetStateMutation,
+  useGetStateQuery,
   useIsEmailExitMutation,
   useIsPhoneNoExitMutation,
   useIsUserNameExitMutation,
 } from "../../redux/reducer/api/commonApi";
 import { useSignUpMutation } from "../../redux/reducer/api/authApi";
 import Loader from "../../components/myComponents/Loader";
+import { useDispatch } from "react-redux";
 
 // Validation Schemas
 const loginSchema = z
@@ -90,14 +95,15 @@ const addressDetailSchema = z.object({
 export function RegistrationFormComponent() {
   const [step, setStep] = useState(1);
 
-  const [getCategory, { data: categoryList, isLoading: isCategoryLoaing }] =
-    useGetCategoryMutation();
-  const [getCountry, { data: countryList, isLoading: isCountryLoaing }] =
-    useGetCountryMutation();
-  const [getState, { data: stateList, isLoading: isStateLoaing }] =
-    useGetStateMutation();
-  const [getRole, { data: roleList, isLoading: isRolesLoaing }] =
-    useGetRoleMutation();
+
+  const { data: categoryList, isLoading: isCategoryLoaing } =
+  useGetCategoryQuery({});
+  const { data: countryList, isLoading: isCountryLoaing } =
+  useGetCountryQuery({});
+  const [getState,{ data: stateList, isLoading: isStateLoaing }]=
+  useGetStateMutation({});
+  const { data: roleList, isLoading: isRolesLoaing } =
+    useGetRoleQuery({});
 
   const [checkIsEmailExits, { data: isEmailExit, isLoading: checkingEmail }] =
     useIsEmailExitMutation();
@@ -108,18 +114,16 @@ export function RegistrationFormComponent() {
     { data: isUserNameExit, isLoading: checkingUserName },
   ] = useIsUserNameExitMutation();
 
-  const [registerUser,{isLoading:isSubmitting}]=useSignUpMutation();
+  const [registerUser,{isLoading:isSubmitting,isSuccess}]=useSignUpMutation();
 
-
+  
   const navigate = useNavigate();
 
-  console.log("categoryList", stateList);
-
-  useEffect(() => {
-    getCategory();
-    getCountry();
-    getRole();
-  }, []);
+  useEffect(()=>{
+    if(isSuccess){
+      navigate("/login");
+    }
+  },[isSuccess]);
 
   const form = useForm<z.infer<typeof loginSchema & typeof userDetailsSchema & typeof addressDetailSchema>>({
     resolver: zodResolver(
@@ -204,7 +208,6 @@ export function RegistrationFormComponent() {
     }
 
   }
-  console.log(form.getValues());
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-modern from-amber-100 to-amber-200 p-4">
@@ -364,8 +367,6 @@ export function RegistrationFormComponent() {
                   control={form.control}
                   name="categoryId"
                   render={({ field }) => {
-                    
-                    console.log('field',field);
                     
                     return (
                     <FormItem>
